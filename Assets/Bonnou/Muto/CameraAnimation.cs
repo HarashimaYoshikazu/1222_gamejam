@@ -80,6 +80,7 @@ namespace Bonnou
         {
             _startText.enabled = false;
             _stopText.enabled = true;
+            _player.PlaySound(3);
 
             _anim = _camTransform.DOMove(_end.position, _moveSpeed)
                 .SetEase(_moveEase)
