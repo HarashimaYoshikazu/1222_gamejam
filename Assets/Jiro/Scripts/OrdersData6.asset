@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa11dd55690466c46a720ca00a37df73, type: 3}
   m_Name: OrdersData6
   m_EditorClassIdentifier: 
-  _jiroType: 1
-  _ninniku: 1
-  _yasai: 2
-  _abura: 1
+  _jiroType: 2
+  _ninniku: 0
+  _yasai: 0
+  _abura: 0
   _karame: 0
-  _call: {fileID: 8300000, guid: f09adf37934b4b948ac0fda4c41a4542, type: 3}
+  _call: {fileID: 8300000, guid: 8e58a089332c2c140b95075532ee8e3e, type: 3}

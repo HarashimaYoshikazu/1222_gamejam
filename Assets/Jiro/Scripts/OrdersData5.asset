@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: OrdersData5
   m_EditorClassIdentifier: 
   _jiroType: 1
-  _ninniku: 1
+  _ninniku: 0
   _yasai: 2
-  _abura: 1
-  _karame: 0
-  _call: {fileID: 8300000, guid: f09adf37934b4b948ac0fda4c41a4542, type: 3}
+  _abura: 0
+  _karame: 1
+  _call: {fileID: 8300000, guid: 2e1ce17b6c22a19428e6706652e29521, type: 3}
