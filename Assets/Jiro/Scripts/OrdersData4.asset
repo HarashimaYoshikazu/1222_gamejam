@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa11dd55690466c46a720ca00a37df73, type: 3}
+  m_Name: OrdersData4
+  m_EditorClassIdentifier: 
+  _jiroType: 0
+  _ninniku: 1
+  _yasai: 2
+  _abura: 1
+  _karame: 1
+  _call: {fileID: 8300000, guid: 1ccbe609425649843985ec6a6d75525f, type: 3}
