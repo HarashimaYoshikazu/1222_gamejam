@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class EnemyInput : IInput 
 {
-    private const float _rayDistance = 10f;
+    private const float _rayDistance = 7f;
     private Vector3 _pivot = new Vector3(0, 0, 0.5f);
 
     public bool IsJump(GameObject go)

@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,14 +15,19 @@ public class SabotageSkill :MonoBehaviour, ISkill
         players = FindObjectsOfType<CharaController>();
     }
 
-    public void UseSkill(ControllType controllType)
+    private bool isSkill = false;
+    public async void UseSkill(ControllType controllType)
     {
-        foreach(CharaController c in players)
+        if (isSkill == true) return;
+        foreach (CharaController c in players)
         {
             if(c != player)
             {
                 c.SetPosition(-2);
             }
         }
+        isSkill = true;
+        await UniTask.Delay(TimeSpan.FromSeconds(5f));
+        isSkill = false;
     }
 }
