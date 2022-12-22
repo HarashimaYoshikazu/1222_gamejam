@@ -120,12 +120,14 @@ namespace Jiro
                     break;
             }
             yield return new WaitForSeconds(3f);
+            _audioSource.pitch = UnityEngine.Random.Range(0.0f, 2.0f);
             _audioSource.PlayOneShot(_orderDetas[_customers[_currentCustomer]].Call);
             _gamePhase = GamePhase.InGame;
         }
 
         public void LastSelect()
         {
+            _audioSource.pitch = 1;
             if (Judge())
             {
                 //Œ©‚½–Ú•Ï‚¦‚é
@@ -150,9 +152,11 @@ namespace Jiro
             if (_currentCustomer == 4)
             {
                 GameFinish();
-                yield return null;
             }
-            Call();
+            if(_gamePhase != GamePhase.GameEnd)
+            {
+                Call();
+            }
         }
 
         bool Judge()
@@ -227,6 +231,7 @@ namespace Jiro
         {
             GameReady,
             InGame,
+            GameEnd
         }
 
         /// <summary>
