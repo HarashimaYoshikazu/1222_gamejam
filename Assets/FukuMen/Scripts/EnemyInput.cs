@@ -22,6 +22,7 @@ public class EnemyInput : IInput
                 _enabled = false;
                 _jumpTimer = 0;
             }
+            return false;
         }
 
         Vector3 origin = go.transform.position + _pivot;
