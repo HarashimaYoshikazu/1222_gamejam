@@ -63,7 +63,25 @@ namespace FukuMen
 
         private void GameFinish(string playerName)
         {
-            _finishText.text = playerName + " èüóòÅI";
+            var charcters = FindObjectsOfType<CharaController>();
+            int currentfirst = -10;
+            CharaController first = null;
+            foreach(var i in charcters)
+            {
+                if (i.CurrentPosition>=currentfirst)
+                {
+                    first = i;
+                }
+            }
+            if (first.ControllType == ControllType.PLAYER)
+            {
+                _finishText.text = playerName + " èüóòÅI";
+            }
+            else
+            {
+                _finishText.text = playerName + " îsñkÅc";
+            }
+            first.Goal();
             if (OnGameFinish != null)
             {
                 OnGameFinish();

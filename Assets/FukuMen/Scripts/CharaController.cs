@@ -12,6 +12,7 @@ public class CharaController : MonoBehaviour
     public ControllType ControllType { get { return _controllType; } set { _controllType= value; } }
     [SerializeField, Range(-5, 5)]
     private int _currentPosition = 0;
+    public int CurrentPosition { get { return _currentPosition; } }
 
     [SerializeField]
     private float _jumpPower = 0f;
@@ -35,15 +36,19 @@ public class CharaController : MonoBehaviour
     Animator _anim;
     AudioPlayer _audioplayer;
 
+    [SerializeField]
+    GameObject _text;
     private void Start()
     {
         if (_controllType == ControllType.PLAYER)
         {
             _iInput = new PlayerInput();
+            _text.SetActive(true);
         }
         else if (_controllType == ControllType.CPU)
         {
             _iInput = new EnemyInput();
+            _text.SetActive(false);
         }
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
