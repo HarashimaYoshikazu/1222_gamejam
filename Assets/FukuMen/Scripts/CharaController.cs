@@ -45,7 +45,7 @@ public class CharaController : MonoBehaviour
 
     private void Update()
     {
-        if (_iJump.IsJump())
+        if (_iJump.IsJump(gameObject))
         {
             _rb.AddForce(transform.up * _jumpPower, ForceMode.Impulse);
             _isGrounded = true;

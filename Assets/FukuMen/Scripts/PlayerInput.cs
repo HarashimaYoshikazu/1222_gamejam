@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInput : IJump
 {
-    public bool IsJump()
+    public bool IsJump(GameObject go)
     {
         return Input.GetButtonDown("Jump");
     }
