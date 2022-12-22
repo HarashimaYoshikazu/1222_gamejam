@@ -1327,6 +1327,7 @@ GameObject:
   - component: {fileID: 6285479609111826149}
   - component: {fileID: 1126137993075092621}
   - component: {fileID: -4741552111957615851}
+  - component: {fileID: -7721751101257583991}
   - component: {fileID: -5504695628036242892}
   m_Layer: 0
   m_Name: AlmondN
@@ -1453,6 +1454,18 @@ MonoBehaviour:
   _clipDamage: {fileID: 8300000, guid: b271230d333c8694ca06e8bcbfa55791, type: 3}
   _clipJump: {fileID: 8300000, guid: f278e5f679886a543b88db4411fa7b60, type: 3}
   _clipGoal: {fileID: 8300000, guid: dcf7b598277a4c041a3c328b52a40949, type: 3}
+--- !u!114 &-7721751101257583991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9033871173247149468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d54cf45dae5032b49a62d309fa154871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &-5504695628036242892
 AudioSource:
   m_ObjectHideFlags: 0
