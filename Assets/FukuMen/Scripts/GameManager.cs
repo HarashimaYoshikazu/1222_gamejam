@@ -77,6 +77,7 @@ namespace FukuMen
             {
                 if (i.CurrentPosition>=currentfirst)
                 {
+                    currentfirst = i.CurrentPosition;
                     first = i;
                 }
             }
