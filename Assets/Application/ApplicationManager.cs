@@ -7,16 +7,8 @@ public class ApplicationManager
 
     public int Score => _score;
 
-    public int CurrentGameNum => _currentGameNum;
-
     int _score;
-    int _currentGameNum;
     List<string> SceneNameList = new List<string>();
-
-    public void GameNumIncrement()
-    {
-        _currentGameNum++;
-    }
 
     public void AddScore(int score)
     {
@@ -27,7 +19,6 @@ public class ApplicationManager
     {
         Debug.Log("SceneNameíçà”");
         _score = 0;
-        _currentGameNum = 0;
         SceneNameList.Add("JiroGameScene");
         SceneNameList.Add("ResultTest");
         SceneNameList.Add("Fukumen_master");
