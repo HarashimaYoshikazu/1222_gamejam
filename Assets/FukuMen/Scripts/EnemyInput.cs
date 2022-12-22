@@ -10,29 +10,34 @@ public class EnemyInput : IJump
     [SerializeField]
     private float _waitTime = 3f;
 
-    //public bool IsJump()
-    //{
-    //    Debug.DrawLine(Vector3.zero, Vector3.forward);
-    //    if (Physics.Raycast(Vector3.zero, Vector3.forward, 5f, LayerMask.NameToLayer("Hurdle")))
-    //    {
-    //        return true;
-    //    }
-    //    return false;
-    //}
+    private const float _rayDistance = 5f;
+    private Vector3 _pivot = new Vector3(0, 0, 0.5f);
 
-    float _timer = 0;
-    public bool IsJump()
+    public bool IsJump(GameObject go)
     {
-        _timer += Time.deltaTime;
-        if(_timer >= _waitTime)
+        Vector3 origin = go.transform.position + _pivot;
+        Vector3 forward = go.transform.position + Vector3.forward + _pivot;
+
+        Debug.DrawLine(origin, forward);
+        if (Physics.Raycast(origin, forward, _rayDistance, LayerMask.NameToLayer("Obstacle")))
         {
-            _timer = 0;
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
+    //float _timer = 0;
+    //public bool IsJump()
+    //{
+    //    _timer += Time.deltaTime;
+    //    if(_timer >= _waitTime)
+    //    {
+    //        _timer = 0;
+    //        return true;
+    //    }
+    //    else
+    //    {
+    //        return false;
+    //    }
+    //}
 }
