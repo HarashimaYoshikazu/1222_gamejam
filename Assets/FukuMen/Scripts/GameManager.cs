@@ -5,61 +5,90 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+namespace FukuMen
 {
-    [SerializeField]
-    private float _finishTimer = 20f;
-    [SerializeField]
-    private Text _timerText = null;
-    [SerializeField]
-    private UnityEvent _finishEvent;
-
-    public event Action OnGameFinish;
-
-    private bool _start = false;
-
-    private void Start()
+    public class GameManager : MonoBehaviour
     {
-        Time.timeScale = 0;
-        _start = false;
-    }
+        [SerializeField]
+        private float _finishTimer = 20f;
+        [SerializeField]
+        private Text _timerText = null;
+        [SerializeField]
+        private Text _finishText = null;
+        [SerializeField]
+        private UnityEvent _finishEvent;
 
-    /// <summary>
-    /// ボタンで呼び出す
-    /// </summary>
-    public void GameStart()
-    {
-        Time.timeScale = 1;
-        _timer = _finishTimer;
-        _start = true;
-    }
+        [SerializeField]
+        GameObject _selectPanel;
 
-    private void Update()
-    {
-        Timer();
-    }
+        public event Action OnGameFinish;
 
-    private float _timer = 0;
-    private void Timer()
-    {
-        if (_start == false) return;
+        private bool _start = false;
 
-        _timer -= Time.deltaTime;
-        _timerText.text = _timer.ToString("00");
-        if (0 >= _timer)
+        private void Start()
         {
-            GameFinish();
+            Time.timeScale = 0;
             _start = false;
         }
-    }
 
-    public void GameFinish()
-    {
-        if(OnGameFinish != null)
-        {
-            OnGameFinish();
+        /// <summary>
+        /// ボタンで呼び出す
+        /// </summary>
+        public void GameStart()
+        {        
+            _selectPanel.SetActive(false);
+            Time.timeScale = 1;
+            _timer = _finishTimer;
+            _start = true;         
         }
 
-        _finishEvent!.Invoke();
+        private void Update()
+        {
+            Timer();
+        }
+
+        private float _timer = 0;
+        private void Timer()
+        {
+            if (_start == false) return;
+
+            _timer -= Time.deltaTime;
+            _timerText.text = _timer.ToString("00");
+            if (0 >= _timer)
+            {
+                GameFinish("player");
+                _start = false;
+            }
+        }
+
+        private void GameFinish(string playerName)
+        {
+            var charcters = FindObjectsOfType<CharaController>();
+            int currentfirst = -10;
+            CharaController first = null;
+            foreach(var i in charcters)
+            {
+                if (i.CurrentPosition>=currentfirst)
+                {
+                    first = i;
+                }
+            }
+            if (first.ControllType == ControllType.PLAYER)
+            {
+                _finishText.text = playerName + " 勝利！";
+            }
+            else
+            {
+                _finishText.text = playerName + " 敗北…";
+            }
+            first.Goal();
+            if (OnGameFinish != null)
+            {
+                OnGameFinish();
+            }
+
+            _finishEvent!.Invoke();
+        }
     }
 }
+

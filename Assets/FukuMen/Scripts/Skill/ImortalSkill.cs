@@ -1,11 +1,25 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ImortalSkill : ISkill
+public class ImortalSkill : MonoBehaviour, ISkill
 {
-    public void UseSkill()
+    [SerializeField]
+    private int _imortalTime = 5;
+
+    private CharaController _charaController;
+
+    private void Start()
     {
-        Debug.Log("ñ≥ìGÉXÉLÉãÅI");
+        _charaController = GetComponent<CharaController>();
+    }
+
+    public async void UseSkill(ControllType controllType)
+    {
+        _charaController.IsHit = true;
+        await UniTask.Delay(TimeSpan.FromSeconds(_imortalTime));
+        _charaController.IsHit = false;
     }
 }

@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,14 +7,12 @@ using UnityEngine;
 public class CharaController : MonoBehaviour
 {
     [SerializeField]
-    ControllType _controllType;
+    public ControllType _controllType;
 
-    [SerializeField]
-    CharacterType _characterType;
-    public CharacterType CharacterType => _characterType;
-
-    [SerializeField, Range(0, 10)]
-    private int _speedPower = 5;
+    public ControllType ControllType { get { return _controllType; } set { _controllType= value; } }
+    [SerializeField, Range(-5, 5)]
+    private int _currentPosition = 0;
+    public int CurrentPosition { get { return _currentPosition; } }
 
     [SerializeField]
     private float _jumpPower = 0f;
@@ -27,52 +27,80 @@ public class CharaController : MonoBehaviour
     private bool _isDamage = false;
 
     [SerializeField]
-    private Transform[] _speedPosition = new Transform[11];
+    float _moveInterval = 2f;
 
-    IJump _iJump;
+    IInput _iInput;
+    ISkill _iSkill;
 
     Rigidbody _rb;
+    Animator _anim;
+    AudioPlayer _audioplayer;
 
+    [SerializeField]
+    GameObject _text;
     private void Start()
     {
         if (_controllType == ControllType.PLAYER)
         {
-            _iJump = new PlayerInput();
+            _iInput = new PlayerInput();
+            _text.SetActive(true);
         }
         else if (_controllType == ControllType.CPU)
         {
-            _iJump= new EnemyInput();
+            _iInput = new EnemyInput();
+            _text.SetActive(false);
         }
-
-        SetPosition(_speedPower);
         _rb = GetComponent<Rigidbody>();
+        _anim = GetComponent<Animator>();
+        _audioplayer = GetComponent<AudioPlayer>();
+        _iSkill = GetComponent<ISkill>();
     }
 
     private void Update()
     {
-        if (_iJump.IsJump(gameObject))
+        if (_iInput.IsJump(gameObject))
         {
-            _rb.AddForce(transform.up * _jumpPower, ForceMode.Impulse);
-            _isGrounded = true;
+            if(!_isGrounded)
+            {
+                _rb.AddForce(transform.up * _jumpPower, ForceMode.Impulse);
+                _audioplayer.AudioPlay("Jump");
+                _isGrounded = true;
+                Debug.Log("Jump");
+            }
+        }
+
+        if(_iInput.IsSkill())
+        {
+            _iSkill.UseSkill(_controllType);
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public bool IsHit = false;
+    private async void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Ground"))
+        if (other.gameObject.CompareTag("Ground"))
         {
             StartCoroutine(JumpInterval());
         }
-        if (other.gameObject.CompareTag("Obstacle"))
+        if (other.gameObject.CompareTag("Obstacle") && IsHit == false)
         {
-            _speedPower--;
-            SetPosition(_speedPower);
+            _anim?.Play("Damage");
+            _audioplayer.AudioPlay("Damage");
+            SetPosition(-1);
+
+            //3ïbä‘ìñÇΩÇËîªíËÇÃÉtÉâÉOÇêÿÇËë÷Ç¶ñ≥ìGÇ…Ç∑ÇÈ
+            IsHit = true;
+            await UniTask.Delay(TimeSpan.FromSeconds(3f));
+            IsHit = false;
         }
     }
 
-    public void SetPosition(int index)
+    public void SetPosition(int value)
     {
-        this.transform.position = _speedPosition[index].position;
+        _currentPosition = Mathf.Clamp(_currentPosition + value, -5, 5);
+        Vector3 newPosotion = this.transform.position;
+        newPosotion.z += Mathf.Clamp(_currentPosition * _moveInterval, -5 * _moveInterval, 5 * _moveInterval);
+        this.transform.position = newPosotion;
     }
 
     IEnumerator JumpInterval()
@@ -80,9 +108,15 @@ public class CharaController : MonoBehaviour
         yield return new WaitForSeconds(_jumpInterval);
         _isGrounded = false;
     }
+
+    public void Goal()
+    {
+        _anim?.Play("Goal");
+        _audioplayer.AudioPlay("Goal");
+    }
 }
 
-enum ControllType
+public enum ControllType
 {
     PLAYER,
     CPU,

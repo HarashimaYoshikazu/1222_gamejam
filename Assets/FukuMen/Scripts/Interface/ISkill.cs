@@ -1,4 +1,4 @@
 interface ISkill
 {
-    public void UseSkill();
+    public void UseSkill(ControllType controllType);
 }
