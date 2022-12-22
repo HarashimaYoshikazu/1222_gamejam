@@ -7,7 +7,7 @@ public class DashSkill : MonoBehaviour, ISkill
     [SerializeField]
     private CharaController _charaController;
     [SerializeField]
-    private int _dashValue = 1;
+    private int _dashValue = 2;
 
     public void UseSkill()
     {

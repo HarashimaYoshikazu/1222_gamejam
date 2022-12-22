@@ -396,6 +396,7 @@ GameObject:
   - component: {fileID: 1684053040691935300}
   - component: {fileID: 884154606904426163}
   - component: {fileID: 618937315503373664}
+  - component: {fileID: 1252271503282373625}
   m_Layer: 0
   m_Name: coin
   m_TagString: Untagged
@@ -474,24 +475,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f1e57a1470dbd84ba50917c6775c38b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _charaType: 0
-  _speedPower: 5
+  _controllType: 0
+  _currentPosition: 0
   _jumpPower: 0
   _jumpInterval: 0
   _isGrounded: 0
   _isDamage: 0
-  _speedPosition:
-  - {fileID: 1273721395}
-  - {fileID: 654170261}
-  - {fileID: 712460543}
-  - {fileID: 11357803}
-  - {fileID: 1665662933}
-  - {fileID: 1322152284}
-  - {fileID: 185730060}
-  - {fileID: 230419995}
-  - {fileID: 1340760462}
-  - {fileID: 1109839796}
-  - {fileID: 2123972255}
+  _moveInterval: 2
+  IsHit: 0
+--- !u!95 &1252271503282373625
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4202661965423010017}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3350882ee132fc54a876efcef372483a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4202661965423010019
 GameObject:
   m_ObjectHideFlags: 0
