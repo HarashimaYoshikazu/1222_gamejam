@@ -219,8 +219,8 @@ namespace Jiro
             Instance = null;
             _audioSource.PlayOneShot(_finishClip);
             _gamePhase = GamePhase.GameEnd;
-            //ApplicationManager.Instance.AddScore(_currentScore);
-            //ApplicationManager.Instance.RandomSceneChange();
+            ApplicationManager.Instance.AddScore(_currentScore);
+            ApplicationManager.Instance.RandomSceneChange();
             Debug.Log("ìÒòYèIóπ");
         }
 
