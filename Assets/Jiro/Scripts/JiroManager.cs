@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 namespace Jiro
 {
@@ -40,23 +41,49 @@ namespace Jiro
         /// <summary>コールのクリップ小、小豚、大</summary>
         [SerializeField] AudioClip[] _callClips;
 
-        JiroValue _currentNinniku = JiroValue.Default;
-        JiroValue _currentYasai = JiroValue.Default;
-        JiroValue _currentAbura = JiroValue.Default;
-        JiroValue _currentKarame = JiroValue.Default;
+        JiroValue _currentNinniku = JiroValue.ふつう;
+        JiroValue _currentYasai = JiroValue.ふつう;
+        JiroValue _currentAbura = JiroValue.ふつう;
+        JiroValue _currentKarame = JiroValue.ふつう;
 
         bool _currentSelect;
+
+        [SerializeField] GameObject _startPanel;
+
+        [SerializeField] Text _ninnikuText;
+        [SerializeField] Text _yasaiText;
+        [SerializeField] Text _aburaText;
+        [SerializeField] Text _karameText;
+        [SerializeField] Animator _animator;
+        [SerializeField] GameObject[] _hudas;
+        [SerializeField] GameObject[] _hudaPos;
+
+        [SerializeField] Image[] _customerImages;
+
+        [SerializeField] AudioClip _finishClip;
+
+        [SerializeField] AudioClip _collectClip;
+        [SerializeField] AudioClip _failedClip;
+
+        void Update()
+        {
+            _ninnikuText.text = "にんにく:"+_currentNinniku.ToString();
+            _yasaiText.text = "やさい:" + _currentYasai.ToString();
+            _aburaText.text = "あぶら:" + _currentAbura.ToString();
+            _karameText.text = "からめ:" + _currentKarame.ToString();
+        }
 
         /// <summary>
         /// ゲームスタートボタン
         /// </summary>
         public void GameStart()
         {
-            Debug.Log("GameStart");
+            ResetValue();
+            _startPanel.SetActive(false);
             RandomSelectCustmers();
-            //アニメーション流す
-            //↓アニメーションイベントがいい
-            Call();
+            _animator.Play("Coming");
+            //↓アニメーションイベントでよぶ
+            //Call();
         }
 
         /// <summary>
@@ -64,16 +91,15 @@ namespace Jiro
         /// </summary>
         void RandomSelectCustmers()
         {
-            Debug.Log("RandomSelect");
             for (int i = 0; i < _customers.Length; i++)
             {
                 _customers[i] = UnityEngine.Random.Range(0, _orderDetas.Length);
+                Instantiate(_hudas[(int)_orderDetas[_customers[i]].JiroType], _hudaPos[i].transform);
             }
         }
 
         public void Call()
         {
-            Debug.Log("Call");
             Debug.Log($"{_orderDetas[_customers[_currentCustomer]].Ninniku},{_orderDetas[_customers[_currentCustomer]].Yasai}," +
                 $"{_orderDetas[_customers[_currentCustomer]].Abura},{_orderDetas[_customers[_currentCustomer]].Karame}");
             StartCoroutine(CallAsync());
@@ -81,7 +107,6 @@ namespace Jiro
 
         IEnumerator CallAsync()
         {
-            Debug.Log("StartAsync");
             switch (_orderDetas[_customers[_currentCustomer]].JiroType)
             {
                 case JiroType.Syou:
@@ -94,32 +119,44 @@ namespace Jiro
                     _audioSource.PlayOneShot(_callClips[2]);
                     break;
             }
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(3f);
             _audioSource.PlayOneShot(_orderDetas[_customers[_currentCustomer]].Call);
             _gamePhase = GamePhase.InGame;
         }
 
         public void LastSelect()
         {
-            Debug.Log("LastSelect");
             if (Judge())
             {
+                //見た目変える
                 Debug.Log("成功です");
+                _customerImages[_currentCustomer].color = Color.red;
+                _audioSource.PlayOneShot(_collectClip);
             }
             else
             {
+                _customerImages[_currentCustomer].color = Color.blue;
+                _audioSource.PlayOneShot(_failedClip);
                 Debug.Log("失敗です");
             }
             _gamePhase = GamePhase.GameReady;
-            //アニメーター流す
-            //↓アニメーションイベントがいい
+            StartCoroutine(Stay());
+        }
+
+        IEnumerator Stay()
+        {
+            yield return new WaitForSeconds(1);
             NextCustmor();
+            if (_currentCustomer == 4)
+            {
+                GameFinish();
+                yield return null;
+            }
             Call();
         }
 
         bool Judge()
         {
-            Debug.Log("Judge");
             if (_orderDetas[_customers[_currentCustomer]].Ninniku != _currentNinniku)
                 return false;
             if (_orderDetas[_customers[_currentCustomer]].Yasai != _currentYasai)
@@ -133,7 +170,6 @@ namespace Jiro
 
         public void Open(GameObject go)
         {
-            Debug.Log("Open");
             if (_currentSelect || _gamePhase == GamePhase.GameReady)
                 return;
             go.SetActive(true);
@@ -142,48 +178,49 @@ namespace Jiro
 
         public void Close(GameObject go)
         {
-            Debug.Log("Close");
             go.SetActive(false);
             _currentSelect = false;
         }
 
         public void NinnikuChanege(int jiroValue)
         {
-            Debug.Log("NinnikuChange");
             _currentNinniku = (JiroValue)jiroValue;
         }
 
         public void YasaiChanege(int jiroValue)
         {
-            Debug.Log("YasaiChange");
             _currentYasai = (JiroValue)jiroValue;
         }
 
         public void AburaChange(int jiroValue)
         {
-            Debug.Log("AburaChange");
             _currentAbura = (JiroValue)jiroValue;
         }
 
         public void KarameChange(int jiroValue)
         {
-            Debug.Log("KarameChange");
             _currentKarame = (JiroValue)jiroValue;
         }
 
         void NextCustmor()
         {
-            Debug.Log("NextCustmor");
-            if (_currentCustomer == 3)
-            {
-                GameFinish();
-            }
+            ResetValue();
             _currentCustomer++;
         }
 
         void GameFinish()
         {
+            Instance = null;
+            _audioSource.PlayOneShot(_finishClip);
             Debug.Log("二郎終了");
+        }
+
+        void ResetValue()
+        {
+            _currentNinniku = JiroValue.ふつう;
+            _currentYasai = JiroValue.ふつう;
+            _currentAbura = JiroValue.ふつう;
+            _currentKarame = JiroValue.ふつう;
         }
 
         enum GamePhase
@@ -197,9 +234,9 @@ namespace Jiro
         /// </summary>
         public enum JiroValue
         {
-            Small,
-            Default,
-            Mashi,
+            すくなめ,
+            ふつう,
+            まし,
         }
 
         /// <summary>
