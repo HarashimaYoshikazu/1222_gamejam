@@ -1283,7 +1283,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: e6c3afac397e36147a42fd7c07336619, type: 3}
-    m_FontSize: 79
+    m_FontSize: 66
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -1294,7 +1294,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.2
-  m_Text: "\u30E4\u30B5\u30A4\u3000\u30DE\u30B7\n\u3042\u3042\u3042\u3042\u3042\u3042\u3042"
+  m_Text: "\u30CB\u30F3\u30CB\u30AF\u3000\n\u30E4\u30B5\u30A4\u3000\n\u30A2\u30D6\u30E9\u3000\n\u30AB\u30E9\u30E1\u3000"
 --- !u!222 &1012191989
 CanvasRenderer:
   m_ObjectHideFlags: 0
