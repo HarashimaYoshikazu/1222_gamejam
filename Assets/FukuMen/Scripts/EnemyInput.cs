@@ -25,19 +25,4 @@ public class EnemyInput : IJump
         }
         return false;
     }
-
-    //float _timer = 0;
-    //public bool IsJump()
-    //{
-    //    _timer += Time.deltaTime;
-    //    if(_timer >= _waitTime)
-    //    {
-    //        _timer = 0;
-    //        return true;
-    //    }
-    //    else
-    //    {
-    //        return false;
-    //    }
-    //}
 }
