@@ -1,4 +1,6 @@
+using UnityEngine;
+
 interface IJump
 {
-    public bool IsJump();
+    public bool IsJump(GameObject go);
 }
