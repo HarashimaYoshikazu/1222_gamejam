@@ -64,6 +64,7 @@ namespace Jiro
 
         [SerializeField] AudioClip _collectClip;
         [SerializeField] AudioClip _failedClip;
+        int _currentScore;
 
         void Update()
         {
@@ -134,6 +135,7 @@ namespace Jiro
                 Debug.Log("ê¨å˜Ç≈Ç∑");
                 _customerImages[_currentCustomer].color = Color.red;
                 _audioSource.PlayOneShot(_collectClip);
+                _currentScore += 150;
             }
             else
             {
@@ -217,6 +219,8 @@ namespace Jiro
             Instance = null;
             _audioSource.PlayOneShot(_finishClip);
             _gamePhase = GamePhase.GameEnd;
+            //ApplicationManager.Instance.AddScore(_currentScore);
+            //ApplicationManager.Instance.RandomSceneChange();
             Debug.Log("ìÒòYèIóπ");
         }
 
