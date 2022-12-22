@@ -7,24 +7,53 @@ using UnityEngine.UI;
 public class CreateCharacter : Singleton<CreateCharacter>
 {
     [SerializeField]
-    SelectButton[] _selectButtons;
+    CharaController _almondPrefab;
     [SerializeField]
-    GameObject[] _characterPrefabs;
+    CharaController _coinPrefab;
+    [SerializeField]
+    CharaController _eggPrefab;
 
-    CharaController[] _charaControllers;
+    CharacterType _selectedType;
 
-    private void Start()
+    [SerializeField]
+    Transform _playerPosition;
+    [SerializeField]
+    Transform[] _othersPosition;
+
+    public void SelectCharacter(CharacterType type)
     {
-
+        _selectedType = type;
     }
 
     public CharaController[] Create()
     {
-        _charaControllers = new CharaController[_characterPrefabs.Length];
-        for (int i = 0; i < _characterPrefabs.Length; i++)
+        CharaController[] charaControllers = new CharaController[3];
+        switch (_selectedType)
         {
-            _charaControllers[i] = Instantiate(_characterPrefabs[i]).GetComponent<CharaController>();           
+            case CharacterType.Almond:
+                charaControllers[0] = Instantiate(_almondPrefab,_playerPosition.position,Quaternion.identity);
+                charaControllers[1] = Instantiate(_eggPrefab, _othersPosition[0].position, Quaternion.identity);
+                charaControllers[2] = Instantiate(_coinPrefab, _othersPosition[1].position, Quaternion.identity);
+                charaControllers[1].ControllType = ControllType.CPU;
+                charaControllers[2].ControllType = ControllType.CPU;
+
+                break;
+            case CharacterType.Coin:
+                charaControllers[0] = Instantiate(_coinPrefab, _playerPosition.position, Quaternion.identity);
+                charaControllers[1] = Instantiate(_eggPrefab, _othersPosition[0].position, Quaternion.identity);
+                charaControllers[2] = Instantiate(_almondPrefab, _othersPosition[1].position, Quaternion.identity);
+                charaControllers[1].ControllType = ControllType.CPU;
+                charaControllers[2].ControllType = ControllType.CPU;
+                break;
+            case CharacterType.Egg:
+                charaControllers[0] = Instantiate(_eggPrefab, _playerPosition.position, Quaternion.identity);
+                charaControllers[1] = Instantiate(_almondPrefab, _othersPosition[0].position, Quaternion.identity);
+                charaControllers[2] = Instantiate(_coinPrefab, _othersPosition[1].position, Quaternion.identity);
+                charaControllers[1].ControllType = ControllType.CPU;
+                charaControllers[2].ControllType = ControllType.CPU;
+                break;
         }
-        return _charaControllers;
+
+        return charaControllers; ;
     }
 }

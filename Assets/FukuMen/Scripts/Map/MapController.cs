@@ -9,6 +9,8 @@ public class MapController : MonoBehaviour
 
     Vector3 _resetPosition;
     float _outPositionZ;
+    [SerializeField]
+    GameObject[] _obstacle;
     public void Init(Vector3 resetPos,float outPosZ)
     {
         _resetPosition= resetPos;
@@ -30,6 +32,10 @@ public class MapController : MonoBehaviour
 
     void ResetPostion()
     {
+        foreach(var i in _obstacle)
+        {
+            i.SetActive(true);
+        }
         this.transform.position = _resetPosition;
     }
 }
