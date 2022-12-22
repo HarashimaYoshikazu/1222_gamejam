@@ -14,7 +14,7 @@ public class DashSkill : MonoBehaviour, ISkill
         _charaController = GetComponent<CharaController>();
     }
 
-    public void UseSkill()
+    public void UseSkill(ControllType controllType)
     {
         _charaController.SetPosition(_dashValue);
     }

@@ -16,7 +16,7 @@ public class ImortalSkill : MonoBehaviour, ISkill
         _charaController = GetComponent<CharaController>();
     }
 
-    public async void UseSkill()
+    public async void UseSkill(ControllType controllType)
     {
         _charaController.IsHit = true;
         await UniTask.Delay(TimeSpan.FromSeconds(_imortalTime));

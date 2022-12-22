@@ -1,6 +1,7 @@
 using UnityEngine;
 
-interface IJump
+interface IInput
 {
     public bool IsJump(GameObject go);
+    public bool IsSkill();
 }

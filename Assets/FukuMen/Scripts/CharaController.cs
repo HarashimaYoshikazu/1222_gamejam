@@ -27,7 +27,8 @@ public class CharaController : MonoBehaviour
     [SerializeField]
     float _moveInterval = 2f;
 
-    IJump _iJump;
+    IInput _iInput;
+    ISkill _iSkill;
 
     Rigidbody _rb;
     Animator _anim;
@@ -37,20 +38,21 @@ public class CharaController : MonoBehaviour
     {
         if (_controllType == ControllType.PLAYER)
         {
-            _iJump = new PlayerInput();
+            _iInput = new PlayerInput();
         }
         else if (_controllType == ControllType.CPU)
         {
-            _iJump = new EnemyInput();
+            _iInput = new EnemyInput();
         }
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
         _audioplayer = GetComponent<AudioPlayer>();
+        _iSkill = GetComponent<ISkill>();
     }
 
     private void Update()
     {
-        if (_iJump.IsJump(gameObject))
+        if (_iInput.IsJump(gameObject))
         {
             if(!_isGrounded)
             {
@@ -59,6 +61,11 @@ public class CharaController : MonoBehaviour
                 _isGrounded = true;
                 Debug.Log("Jump");
             }
+        }
+
+        if(_iInput.IsSkill())
+        {
+            _iSkill.UseSkill(_controllType);
         }
     }
 
