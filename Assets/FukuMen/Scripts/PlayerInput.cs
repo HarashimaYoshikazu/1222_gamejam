@@ -11,6 +11,6 @@ public class PlayerInput : IInput
 
     public bool IsSkill()
     {
-        return Input.GetKeyDown("Return");
+        return Input.GetKeyDown(KeyCode.Return);
     }
 }

@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,8 +16,14 @@ public class DashSkill : MonoBehaviour, ISkill
         _charaController = GetComponent<CharaController>();
     }
 
-    public void UseSkill(ControllType controllType)
+    private bool isSkill = false;
+    public async void UseSkill(ControllType controllType)
     {
+        if (isSkill == true) return;
+        
         _charaController.SetPosition(_dashValue);
+        isSkill = true;
+        await UniTask.Delay(TimeSpan.FromSeconds(3f));
+        isSkill = false;
     }
 }
