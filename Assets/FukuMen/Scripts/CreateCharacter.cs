@@ -20,10 +20,6 @@ public class CreateCharacter : Singleton<CreateCharacter>
     [SerializeField]
     Transform[] _othersPosition;
 
-    private void Start()
-    {
-        Create();
-    }
     public void SelectCharacter(CharacterType type)
     {
         _selectedType = type;
