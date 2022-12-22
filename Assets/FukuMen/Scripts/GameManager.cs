@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GameFinish()
+    private void GameFinish()
     {
         if(OnGameFinish != null)
         {
