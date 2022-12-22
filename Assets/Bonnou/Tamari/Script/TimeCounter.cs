@@ -10,10 +10,12 @@ namespace Bonnou
 {
     public class TimeCounter : MonoBehaviour
     {
+
+        [SerializeField] float _startTime;
         [SerializeField] float _limitTime;
+        [SerializeField] float _passTime = 0.2f;
 
         [SerializeField] float _firstActionTime;
-        [SerializeField] float _secondActionTime;
 
         float _score;
         [SerializeField] float _baseScore;
@@ -22,11 +24,15 @@ namespace Bonnou
 
         [SerializeField] Text _timeText;
         [SerializeField] Text _scoreText;
-        [SerializeField] float _startTime;
+        [SerializeField] Text _goalText;
+
+        [SerializeField] string _goalWord;
+        [SerializeField] string _goalWord2;
+        [SerializeField] string _goalWord3;
+
         float _time2;
         bool _isStop;
         bool _isFirst;
-        bool _isSecond;
         bool _isEnded;
 
         void Update()
@@ -45,16 +51,6 @@ namespace Bonnou
                 CountTime();
                 StopTime();
             }
-
-            if (_isFirst)
-            {
-
-            }
-
-            if (_isSecond)
-            {
-                
-            }
         }
 
         void CountTime()
@@ -64,10 +60,6 @@ namespace Bonnou
             if (_startTime >= _firstActionTime)
             {
                 _isFirst = true;
-            }
-            if (_startTime >= _secondActionTime && !_isEnded)
-            {
-                _isSecond = true;
                 var seq = DOTween.Sequence();
                 seq.Append(_timeText.DOFade(0f, 2f));
             }
@@ -84,8 +76,6 @@ namespace Bonnou
                 _score = 0;
             }
             _scoreText.text = (_score * 10).ToString("F0");
-
-            
         }
         async void StopTime()
         {
@@ -99,12 +89,9 @@ namespace Bonnou
                 await UniTask.Delay(TimeSpan.FromSeconds(_waitTime));
 
                 var seq = DOTween.Sequence();
-                seq.Append(_timeText.DOFade(1f, 1f));
-
-                await UniTask.Delay(TimeSpan.FromSeconds(_waitTime));
-
-                var seq2 = DOTween.Sequence();
-                seq2.Append(_scoreText.DOFade(1f, 1f));
+                seq.Append(_timeText.DOFade(1f, 1f)).SetDelay(1f)
+                    .Append(_scoreText.DOFade(1f, 1f))
+                    .Append(_goalText.DOFade(1f, 0.5f));
             }
 
             if (_startTime >= _limitTime + 1f)
@@ -114,6 +101,28 @@ namespace Bonnou
                 DOTween.Sequence()
                     .Append(_timeText.DOFade(1f, 1f))
                     .Join(_scoreText.DOFade(1f, 1f));
+            }
+            ShowText();
+        }
+
+        void ShowText()
+        {
+            float diff = _limitTime - _startTime;
+            if(diff < -_passTime)
+            {
+                _goalText.text = _goalWord3;
+            }
+            if(0 >= diff && diff >= -_passTime)
+            {
+                _goalText.text = _goalWord;
+            }
+            if(_passTime + 0.3f >= diff && diff > 0)
+            {
+                _goalText.text = _goalWord2;
+            }
+            if(diff > _passTime + 0.3f)
+            {
+                _goalText.text = _goalWord3;
             }
         }
     }
