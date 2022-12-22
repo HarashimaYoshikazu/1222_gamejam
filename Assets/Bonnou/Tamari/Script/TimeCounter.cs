@@ -12,7 +12,7 @@ namespace Bonnou
     {
 
         [SerializeField] float _startTime;
-        [SerializeField] float _limitTime;
+        private const int LimitTime = 60;
         [SerializeField] float _passTime = 0.2f;
 
         [SerializeField] float _firstActionTime;
@@ -30,15 +30,14 @@ namespace Bonnou
         [SerializeField] string _goalWord2;
         [SerializeField] string _goalWord3;
 
-        float _time2;
-        bool _isStop;
-        bool _isFirst;
-        bool _isEnded;
+        bool _isStop = false;
+        bool _isFirst = false;
+        bool _isEnded = false;
 
         void Update()
         {
             ScoreCalculation();
-            if (_startTime >= _limitTime)
+            if (_startTime >= LimitTime)
             {
                 _isEnded = true;
                 if (_isEnded)
@@ -46,32 +45,34 @@ namespace Bonnou
                     _timeText.text = "00" + ":" + "00" + ":" + "0" + (_startTime % 60).ToString("F3");
                 }
             }
-            if (!_isStop)
+            if (!_isStop && !_isEnded)
             {
                 CountTime();
                 StopTime();
             }
+
+            ShowText();
         }
 
         void CountTime()
         {
             _startTime += Time.deltaTime;
             _timeText.text = "23" + ":" + "59" + ":" + _startTime.ToString("F3");
-            if (_startTime >= _firstActionTime)
+            if (_startTime >= _firstActionTime && !_isFirst)
             {
-                _isFirst = true;
                 var seq = DOTween.Sequence();
-                seq.Append(_timeText.DOFade(0f, 2f));
+                seq.Append(_timeText.DOFade(0f, 2f))
+                    .OnComplete(ChangeBool);    
             }
         }
         //TODO;スコアを共有できるようにする
         void ScoreCalculation()
         {
-            float diff = _limitTime - _startTime;
+            float diff = LimitTime - _startTime;
 
             _score = _baseScore - Math.Abs(diff);
 
-            if (_startTime >= _limitTime + 1f)
+            if (_startTime >= LimitTime + 1f)
             {
                 _score = 0;
             }
@@ -79,7 +80,7 @@ namespace Bonnou
         }
         async void StopTime()
         {
-            if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Jump") && _isFirst || Input.GetButtonDown("Fire1") && _isFirst)
             {
                 _isStop = true;
                 _isEnded = true;
@@ -89,25 +90,24 @@ namespace Bonnou
                 await UniTask.Delay(TimeSpan.FromSeconds(_waitTime));
 
                 var seq = DOTween.Sequence();
-                seq.Append(_timeText.DOFade(1f, 1f)).SetDelay(1f)
-                    .Append(_scoreText.DOFade(1f, 1f))
-                    .Append(_goalText.DOFade(1f, 0.5f));
+                seq.Append(_timeText.DOFade(1f, _waitTime))
+                    .Append(_scoreText.DOFade(1f, _waitTime))
+                    .Append(_goalText.DOFade(1f, _waitTime));
             }
 
-            if (_startTime >= _limitTime + 1f)
+            if (_startTime >= LimitTime + 1f)
             {
                 _isStop = true;
                 _isEnded = true;
                 DOTween.Sequence()
-                    .Append(_timeText.DOFade(1f, 1f))
-                    .Join(_scoreText.DOFade(1f, 1f));
+                    .Append(_timeText.DOFade(1f, _waitTime))
+                    .Join(_scoreText.DOFade(1f, _waitTime));
             }
-            ShowText();
         }
 
         void ShowText()
         {
-            float diff = _limitTime - _startTime;
+            float diff = LimitTime - _startTime;
             if(diff < -_passTime)
             {
                 _goalText.text = _goalWord3;
@@ -124,6 +124,11 @@ namespace Bonnou
             {
                 _goalText.text = _goalWord3;
             }
+        }
+
+        void ChangeBool()
+        {
+            _isFirst = true;
         }
     }
 }

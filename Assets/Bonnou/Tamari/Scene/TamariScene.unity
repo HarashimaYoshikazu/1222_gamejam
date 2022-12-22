@@ -327,7 +327,7 @@ MonoBehaviour:
   _limitTime: 60
   _passTime: 0.3
   _firstActionTime: 53
-  _baseScore: 53
+  _baseScore: 50
   _waitTime: 1
   _timeText: {fileID: 1417736716}
   _scoreText: {fileID: 1723433846}
