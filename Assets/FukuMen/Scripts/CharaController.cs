@@ -31,6 +31,7 @@ public class CharaController : MonoBehaviour
 
     Rigidbody _rb;
     Animator _anim;
+    AudioPlayer _audioplayer;
 
     private void Start()
     {
@@ -44,14 +45,20 @@ public class CharaController : MonoBehaviour
         }
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
+        _audioplayer = GetComponent<AudioPlayer>();
     }
 
     private void Update()
     {
         if (_iJump.IsJump(gameObject))
         {
-            _rb.AddForce(transform.up * _jumpPower, ForceMode.Impulse);
-            _isGrounded = true;
+            if(!_isGrounded)
+            {
+                _rb.AddForce(transform.up * _jumpPower, ForceMode.Impulse);
+                _audioplayer.AudioPlay("Jump");
+                _isGrounded = true;
+                Debug.Log("Jump");
+            }
         }
     }
 
@@ -65,6 +72,7 @@ public class CharaController : MonoBehaviour
         if (other.gameObject.CompareTag("Obstacle") && IsHit == false)
         {
             _anim?.Play("Damage");
+            _audioplayer.AudioPlay("Damage");
             SetPosition(-1);
 
             //3ïbä‘ìñÇΩÇËîªíËÇÃÉtÉâÉOÇêÿÇËë÷Ç¶ñ≥ìGÇ…Ç∑ÇÈ
@@ -91,6 +99,12 @@ public class CharaController : MonoBehaviour
     public void SetCharcterType()
     {
 
+    }
+
+    public void Goal()
+    {
+        _anim?.Play("Goal");
+        _audioplayer.AudioPlay("Goal");
     }
 }
 
