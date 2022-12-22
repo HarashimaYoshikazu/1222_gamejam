@@ -7,8 +7,8 @@ public class CharaController : MonoBehaviour
     [SerializeField]
     CharaType _charaType;
 
-    [SerializeField, Range(-5, 5)]
-    private int _speedPower = 0;
+    [SerializeField, Range(0, 10)]
+    private int _speedPower = 5;
 
     [SerializeField]
     private float _jumpPower = 0f;
@@ -40,6 +40,7 @@ public class CharaController : MonoBehaviour
             _iJump= new EnemyInput();
         }
 
+        SetPosition(_speedPower);
         _rb = GetComponent<Rigidbody>();
     }
 
@@ -61,7 +62,13 @@ public class CharaController : MonoBehaviour
         if (other.gameObject.CompareTag("Obstacle"))
         {
             _speedPower--;
+            SetPosition(_speedPower);
         }
+    }
+
+    public void SetPosition(int index)
+    {
+        this.transform.position = _speedPosition[index].position;
     }
 
     IEnumerator JumpInterval()
