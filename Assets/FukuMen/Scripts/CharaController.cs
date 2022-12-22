@@ -7,12 +7,8 @@ public class CharaController : MonoBehaviour
     [SerializeField]
     ControllType _controllType;
 
-    [SerializeField]
-    CharacterType _characterType;
-    public CharacterType CharacterType => _characterType;
-
-    [SerializeField, Range(0, 10)]
-    private int _speedPower = 5;
+    [SerializeField, Range(-5, 5)]
+    private int _currentPosition = 0;
 
     [SerializeField]
     private float _jumpPower = 0f;
@@ -27,7 +23,7 @@ public class CharaController : MonoBehaviour
     private bool _isDamage = false;
 
     [SerializeField]
-    private Transform[] _speedPosition = new Transform[11];
+    float _moveInterval = 2f;
 
     IJump _iJump;
 
@@ -41,10 +37,8 @@ public class CharaController : MonoBehaviour
         }
         else if (_controllType == ControllType.CPU)
         {
-            _iJump= new EnemyInput();
+            _iJump = new EnemyInput();
         }
-
-        SetPosition(_speedPower);
         _rb = GetComponent<Rigidbody>();
     }
 
@@ -59,20 +53,22 @@ public class CharaController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Ground"))
+        if (other.gameObject.CompareTag("Ground"))
         {
             StartCoroutine(JumpInterval());
         }
         if (other.gameObject.CompareTag("Obstacle"))
         {
-            _speedPower--;
-            SetPosition(_speedPower);
+            SetPosition(-1);
         }
     }
 
-    public void SetPosition(int index)
+    public void SetPosition(int value)
     {
-        this.transform.position = _speedPosition[index].position;
+        _currentPosition = Mathf.Clamp(_currentPosition + value, -5, 5);
+        Vector3 newPosotion = this.transform.position;
+        newPosotion.z += Mathf.Clamp(_currentPosition * _moveInterval, -5 * _moveInterval, 5 * _moveInterval);
+        this.transform.position = newPosotion;
     }
 
     IEnumerator JumpInterval()
@@ -80,9 +76,14 @@ public class CharaController : MonoBehaviour
         yield return new WaitForSeconds(_jumpInterval);
         _isGrounded = false;
     }
+
+    public void SetCharcterType()
+    {
+
+    }
 }
 
-enum ControllType
+public enum ControllType
 {
     PLAYER,
     CPU,
