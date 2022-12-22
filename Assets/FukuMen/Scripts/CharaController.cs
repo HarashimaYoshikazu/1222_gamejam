@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class CharaController : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField, Range(-5, 5)]
     private int _speedPower = 0;
 
     [SerializeField]
@@ -13,11 +14,12 @@ public class CharaController : MonoBehaviour
     [SerializeField]
     private bool _isDamage = false;
 
+    [Inject]
     IJump _iJump;
 
     private void Update()
     {
-        if(_iJump.IsJump())
+        if (_iJump.IsJump())
         {
 
         }
