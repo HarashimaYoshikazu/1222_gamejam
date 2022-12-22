@@ -4,5 +4,20 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Main/Scene/MainTitleScene.unity
+    guid: 073250e80891ffd42ba6d60797af7014
+  - enabled: 1
+    path: Assets/Jiro/Scene/JiroGameScene.unity
+    guid: 995bea86b75e8a840b665083570098e0
+  - enabled: 1
+    path: Assets/Bonnou/Muto/SpriteTest.unity
+    guid: 86d5d041d1e43134499e158847bf0a9b
+  - enabled: 1
+    path: Assets/FukuMen/Scene/Fukumen_master.unity
+    guid: 5265dfd12ae10294b8bd802b2e050ce2
+  - enabled: 1
+    path: Assets/Main/Scene/MainResultScene.unity
+    guid: 0f977a3a23034d644bcbc8be967b2d67
   m_configObjects: {}

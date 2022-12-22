@@ -130,7 +130,7 @@ namespace Bonnou
                 
             }
 
-            if (_startTime >= LimitTime + 10f)
+            if (_startTime >= LimitTime + 1)
             {
                 _isStop = true;
                 _isEnded = true;
@@ -138,7 +138,7 @@ namespace Bonnou
                 ChangeIcon();
 
                 _timerText.text = _timeStr;
-                ApplicationManager.Instance.AddScore((int)_score);
+                ApplicationManager.Instance.AddScore((int)_score * 10);
 
                 var seq = DOTween.Sequence();
                 seq.Append(_resultPanel.DOScale(Vector3.one, _resultDuration).SetEase(Ease.OutBounce))
