@@ -4,11 +4,21 @@ using UnityEngine;
 
 public class SabotageSkill :MonoBehaviour, ISkill
 {
-    [SerializeField]
-    private CharaController _charaController;
+    private CharaController[] players;
+
+    private void Start()
+    {
+        players = FindObjectsOfType<CharaController>();
+    }
 
     public void UseSkill()
     {
-        Debug.Log("ñWäQÉXÉLÉãÅI");
+        foreach(CharaController c in players)
+        {
+            if(c._controllType == ControllType.CPU)
+            {
+                c.SetPosition(-2);
+            }
+        }
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 public class CharaController : MonoBehaviour
 {
     [SerializeField]
-    ControllType _controllType;
+    public ControllType _controllType;
 
     [SerializeField, Range(-5, 5)]
     private int _currentPosition = 0;
