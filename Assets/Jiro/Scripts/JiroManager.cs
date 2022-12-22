@@ -120,7 +120,7 @@ namespace Jiro
                     break;
             }
             yield return new WaitForSeconds(3f);
-            _audioSource.pitch = UnityEngine.Random.Range(0.0f, 2.0f);
+            _audioSource.pitch = UnityEngine.Random.Range(0.8f, 2.0f);
             _audioSource.PlayOneShot(_orderDetas[_customers[_currentCustomer]].Call);
             _gamePhase = GamePhase.InGame;
         }
@@ -216,6 +216,7 @@ namespace Jiro
         {
             Instance = null;
             _audioSource.PlayOneShot(_finishClip);
+            _gamePhase = GamePhase.GameEnd;
             Debug.Log("ìÒòYèIóπ");
         }
 
