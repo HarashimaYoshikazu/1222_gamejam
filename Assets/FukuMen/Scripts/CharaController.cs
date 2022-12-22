@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +30,7 @@ public class CharaController : MonoBehaviour
     IJump _iJump;
 
     Rigidbody _rb;
+    Animator _anim;
 
     private void Start()
     {
@@ -40,6 +43,7 @@ public class CharaController : MonoBehaviour
             _iJump = new EnemyInput();
         }
         _rb = GetComponent<Rigidbody>();
+        _anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -51,15 +55,22 @@ public class CharaController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public bool IsHit = false;
+    private async void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
             StartCoroutine(JumpInterval());
         }
-        if (other.gameObject.CompareTag("Obstacle"))
+        if (other.gameObject.CompareTag("Obstacle") && IsHit == false)
         {
+            _anim?.Play("Damage");
             SetPosition(-1);
+
+            //3ïbä‘ìñÇΩÇËîªíËÇÃÉtÉâÉOÇêÿÇËë÷Ç¶ñ≥ìGÇ…Ç∑ÇÈ
+            IsHit = true;
+            await UniTask.Delay(TimeSpan.FromSeconds(3f));
+            IsHit = false;
         }
     }
 
