@@ -27,6 +27,8 @@ namespace Bonnou
         Tween _anim;
         Fade _fade;
 
+        bool _isStart;
+
         private void Awake()
         {
             _camTransform = Camera.main.transform;
@@ -53,10 +55,21 @@ namespace Bonnou
 
         private void Start()
         {
-            OnPlay();
+            
         }
         private void Update()
         {
+            if (!_isStart)
+            {
+                if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1"))
+                {
+                    _isStart = true;
+                    OnPlay();
+                }
+
+                return;
+            }
+
             if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1"))
             {
                 OnStop();
@@ -67,6 +80,7 @@ namespace Bonnou
         {
             _startText.enabled = false;
             _stopText.enabled = true;
+            _player.PlaySound(3);
 
             _anim = _camTransform.DOMove(_end.position, _moveSpeed)
                 .SetEase(_moveEase)
