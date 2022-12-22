@@ -52,6 +52,7 @@ namespace Jiro
         /// </summary>
         public void GameStart()
         {
+            Debug.Log("GameStart");
             RandomSelectCustmers();
             //アニメーション流す
             //↓アニメーションイベントがいい
@@ -63,7 +64,8 @@ namespace Jiro
         /// </summary>
         void RandomSelectCustmers()
         {
-            for(int i = 0; i < _customers.Length; i++)
+            Debug.Log("RandomSelect");
+            for (int i = 0; i < _customers.Length; i++)
             {
                 _customers[i] = UnityEngine.Random.Range(0, _orderDetas.Length);
             }
@@ -71,12 +73,16 @@ namespace Jiro
 
         public void Call()
         {
+            Debug.Log("Call");
+            Debug.Log($"{_orderDetas[_customers[_currentCustomer]].Ninniku},{_orderDetas[_customers[_currentCustomer]].Yasai}," +
+                $"{_orderDetas[_customers[_currentCustomer]].Abura},{_orderDetas[_customers[_currentCustomer]].Karame}");
             StartCoroutine(CallAsync());
         }
 
         IEnumerator CallAsync()
         {
-            switch(_orderDetas[_customers[_currentCustomer]].JiroType)
+            Debug.Log("StartAsync");
+            switch (_orderDetas[_customers[_currentCustomer]].JiroType)
             {
                 case JiroType.Syou:
                     _audioSource.PlayOneShot(_callClips[0]);
@@ -88,14 +94,15 @@ namespace Jiro
                     _audioSource.PlayOneShot(_callClips[2]);
                     break;
             }
-            yield return 1.5f;
+            yield return new WaitForSeconds(1.5f);
             _audioSource.PlayOneShot(_orderDetas[_customers[_currentCustomer]].Call);
             _gamePhase = GamePhase.InGame;
         }
 
         public void LastSelect()
         {
-            if(Judge())
+            Debug.Log("LastSelect");
+            if (Judge())
             {
                 Debug.Log("成功です");
             }
@@ -112,7 +119,8 @@ namespace Jiro
 
         bool Judge()
         {
-            if(_orderDetas[_customers[_currentCustomer]].Ninniku != _currentNinniku)
+            Debug.Log("Judge");
+            if (_orderDetas[_customers[_currentCustomer]].Ninniku != _currentNinniku)
                 return false;
             if (_orderDetas[_customers[_currentCustomer]].Yasai != _currentYasai)
                 return false;
@@ -125,6 +133,7 @@ namespace Jiro
 
         public void Open(GameObject go)
         {
+            Debug.Log("Open");
             if (_currentSelect || _gamePhase == GamePhase.GameReady)
                 return;
             go.SetActive(true);
@@ -133,33 +142,39 @@ namespace Jiro
 
         public void Close(GameObject go)
         {
+            Debug.Log("Close");
             go.SetActive(false);
             _currentSelect = false;
         }
 
         public void NinnikuChanege(int jiroValue)
         {
+            Debug.Log("NinnikuChange");
             _currentNinniku = (JiroValue)jiroValue;
         }
 
         public void YasaiChanege(int jiroValue)
         {
+            Debug.Log("YasaiChange");
             _currentYasai = (JiroValue)jiroValue;
         }
 
         public void AburaChange(int jiroValue)
         {
+            Debug.Log("AburaChange");
             _currentAbura = (JiroValue)jiroValue;
         }
 
         public void KarameChange(int jiroValue)
         {
+            Debug.Log("KarameChange");
             _currentKarame = (JiroValue)jiroValue;
         }
 
         void NextCustmor()
         {
-            if(_currentCustomer == 3)
+            Debug.Log("NextCustmor");
+            if (_currentCustomer == 3)
             {
                 GameFinish();
             }
