@@ -8,6 +8,19 @@ public class MapManager : Singleton<MapManager>
 
     [SerializeField]
     List<MapController> _maps;
+
+    [SerializeField]
+    Transform _resetPositionTransform;
+    [SerializeField]
+    float _outPositionZ;
+
+    private void Start()
+    {
+        foreach (var map in _maps)
+        {
+            map.Init(_resetPositionTransform.position,_outPositionZ);
+        }
+    }
     void Update()
     {
         if (_isPause)
