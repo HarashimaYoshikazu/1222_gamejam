@@ -105,7 +105,8 @@ namespace Bonnou
 
             _camTransform.position = _begin.position;
             _camTransform.DOShakePosition(_shakeDuration, _strength);
-
+            _fade.Kill();
+            _backImage.enabled = false;
             _player.PlaySound(2);
         }
     }
@@ -117,35 +118,50 @@ namespace Bonnou
     public class Fade
     {
         Image _image;
+        Tween _tween;
 
         public Fade(Image panel)
         {
             _image = panel;
         }
 
+        public void Kill()
+        {
+            if(_tween != null)
+            {
+                _tween.Kill();
+            }
+        }
+
         public void OnFadeIn(float duration, Ease ease, Action action)
         {
-            _image.DOFade(1, duration)
+            _tween = _image.DOFade(1, duration)
                 .SetEase(ease)
                 .OnComplete(() =>
                 {
                     action();
                 });
+
+            _tween.Play();
         }
         public void OnFadeInOut(float duration, Ease ease, Action action)
         {
-            _image.DOFade(1, duration)
+            _tween = _image.DOFade(1, duration)
                 .SetEase(ease)
                 .OnComplete(() =>
                 {
                     action();
                     OnFadeOut(duration, ease);
                 });
+
+            _tween.Play();
         }
         public void OnFadeOut(float duration, Ease ease)
         {
-            _image.DOFade(0, duration)
+            _tween = _image.DOFade(0, duration)
                 .SetEase(ease);
+
+            _tween.Play();
         }
     }
 }
