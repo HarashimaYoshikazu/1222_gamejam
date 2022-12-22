@@ -21,12 +21,19 @@ namespace FukuMen
         [SerializeField]
         GameObject _selectPanel;
 
+        [SerializeField]
+        Button _endButton;
+
         public event Action OnGameFinish;
 
         private bool _start = false;
 
         private void Start()
         {
+            _endButton.onClick.AddListener(() => 
+            {
+                ApplicationManager.Instance.RandomSceneChange();
+            });
             Time.timeScale = 0;
             _start = false;
         }
@@ -63,7 +70,28 @@ namespace FukuMen
 
         private void GameFinish(string playerName)
         {
-            _finishText.text = playerName + " èüóòÅI";
+            var charcters = FindObjectsOfType<CharaController>();
+            int currentfirst = -10;
+            CharaController first = null;
+            foreach(var i in charcters)
+            {
+                if (i.CurrentPosition>=currentfirst)
+                {
+                    currentfirst = i.CurrentPosition;
+                    first = i;
+                }
+            }
+            if (first.ControllType == ControllType.PLAYER)
+            {
+                _finishText.text = playerName + " èüóòÅI";
+                ApplicationManager.Instance.AddScore(500);
+            }
+            else
+            {
+                _finishText.text = playerName + " îsñkÅc";
+                ApplicationManager.Instance.AddScore(100);
+            }
+            first.Goal();
             if (OnGameFinish != null)
             {
                 OnGameFinish();

@@ -5,9 +5,9 @@ public class ApplicationManager
 {
     public static ApplicationManager Instance = new ApplicationManager();
 
-    public int Score => _score;
+    public static int Score => _score;
 
-    int _score;
+    static int _score;
     List<string> SceneNameList = new List<string>();
 
     public void AddScore(int score)
@@ -20,7 +20,7 @@ public class ApplicationManager
         Debug.Log("SceneNameíçà”");
         _score = 0;
         SceneNameList.Add("JiroGameScene");
-        SceneNameList.Add("ResultTest");
+        SceneNameList.Add("SpriteTest");
         SceneNameList.Add("Fukumen_master");
     }
 
@@ -31,9 +31,12 @@ public class ApplicationManager
         {
             sceneName = "MainResultScene";
         }
-        int random = Random.Range(0, SceneNameList.Count);
-        sceneName = SceneNameList[random];
-        SceneNameList.RemoveAt(random);
+        else
+        {
+            int random = Random.Range(0, SceneNameList.Count);
+            sceneName = SceneNameList[random];
+            SceneNameList.RemoveAt(random);
+        }
         SceneChangeController.LoadScene(sceneName);
     }
 }

@@ -21,11 +21,16 @@ namespace Bonnou
         [SerializeField] float _shakeDuration = 0.2f;
         [SerializeField] float _strength = 0.2f;
         [Space(10)]
-        [SerializeField]AudioPlayer _player;
+        [SerializeField] AudioPlayer _player;
+        [SerializeField] Text _text;
 
         Transform _camTransform;
         Tween _anim;
         Fade _fade;
+
+        bool _isStart;
+
+        bool _isEnd;
 
         private void Awake()
         {
@@ -53,13 +58,30 @@ namespace Bonnou
 
         private void Start()
         {
-            OnPlay();
+
         }
         private void Update()
         {
-            if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1"))
+            if (!_isStart)
             {
-                OnStop();
+                if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1"))
+                {
+                    _isStart = true;
+                    OnPlay();
+                }
+
+                return;
+            }
+
+            if (!_isEnd)
+            {
+                if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1"))
+                    OnStop();
+            }
+            else
+            {
+                if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1"))
+                    ApplicationManager.Instance.RandomSceneChange();
             }
         }
 
@@ -67,6 +89,7 @@ namespace Bonnou
         {
             _startText.enabled = false;
             _stopText.enabled = true;
+            _player.PlaySound(3);
 
             _anim = _camTransform.DOMove(_end.position, _moveSpeed)
                 .SetEase(_moveEase)
@@ -108,6 +131,9 @@ namespace Bonnou
             _fade.Kill();
             _backImage.enabled = false;
             _player.PlaySound(2);
+            _isEnd = true;
+            _text.enabled = true;
+            _stopText.enabled = false;
         }
     }
 }
@@ -127,7 +153,7 @@ namespace Bonnou
 
         public void Kill()
         {
-            if(_tween != null)
+            if (_tween != null)
             {
                 _tween.Kill();
             }
