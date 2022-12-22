@@ -9,6 +9,7 @@ public class CharaController : MonoBehaviour
     [SerializeField]
     public ControllType _controllType;
 
+    public ControllType ControllType { get { return _controllType; } set { _controllType= value; } }
     [SerializeField, Range(-5, 5)]
     private int _currentPosition = 0;
 
@@ -101,11 +102,6 @@ public class CharaController : MonoBehaviour
     {
         yield return new WaitForSeconds(_jumpInterval);
         _isGrounded = false;
-    }
-
-    public void SetCharcterType()
-    {
-
     }
 
     public void Goal()
