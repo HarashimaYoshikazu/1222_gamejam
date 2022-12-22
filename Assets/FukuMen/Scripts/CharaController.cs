@@ -5,7 +5,11 @@ using UnityEngine;
 public class CharaController : MonoBehaviour
 {
     [SerializeField]
-    CharaType _charaType;
+    ControllType _controllType;
+
+    [SerializeField]
+    CharacterType _characterType;
+    public CharacterType CharacterType => _characterType;
 
     [SerializeField, Range(0, 10)]
     private int _speedPower = 5;
@@ -31,11 +35,11 @@ public class CharaController : MonoBehaviour
 
     private void Start()
     {
-        if (_charaType == CharaType.PLAYER)
+        if (_controllType == ControllType.PLAYER)
         {
             _iJump = new PlayerInput();
         }
-        else if (_charaType == CharaType.CPU)
+        else if (_controllType == ControllType.CPU)
         {
             _iJump= new EnemyInput();
         }
@@ -78,7 +82,7 @@ public class CharaController : MonoBehaviour
     }
 }
 
-enum CharaType
+enum ControllType
 {
     PLAYER,
     CPU,
