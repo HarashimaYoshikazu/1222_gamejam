@@ -398,6 +398,7 @@ GameObject:
   - component: {fileID: 618937315503373664}
   - component: {fileID: 1252271503282373625}
   - component: {fileID: 3137318475734578771}
+  - component: {fileID: 3433824004036925290}
   - component: {fileID: 6343669883523234888}
   m_Layer: 0
   m_Name: coin
@@ -520,6 +521,19 @@ MonoBehaviour:
   _clipDamage: {fileID: 8300000, guid: b271230d333c8694ca06e8bcbfa55791, type: 3}
   _clipJump: {fileID: 8300000, guid: f278e5f679886a543b88db4411fa7b60, type: 3}
   _clipGoal: {fileID: 8300000, guid: dcf7b598277a4c041a3c328b52a40949, type: 3}
+--- !u!114 &3433824004036925290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4202661965423010017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10ef66b0e8e1ac645937d1b2ca503d95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _imortalTime: 5
 --- !u!82 &6343669883523234888
 AudioSource:
   m_ObjectHideFlags: 0

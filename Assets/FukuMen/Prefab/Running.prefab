@@ -1201,6 +1201,7 @@ GameObject:
   - component: {fileID: 4670848297579760043}
   - component: {fileID: 4242185627422861026}
   - component: {fileID: -6155962547307484745}
+  - component: {fileID: -4791038090125988634}
   - component: {fileID: 2934221674849538792}
   m_Layer: 0
   m_Name: Running
@@ -1325,6 +1326,19 @@ MonoBehaviour:
   _clipDamage: {fileID: 8300000, guid: b271230d333c8694ca06e8bcbfa55791, type: 3}
   _clipJump: {fileID: 8300000, guid: f278e5f679886a543b88db4411fa7b60, type: 3}
   _clipGoal: {fileID: 8300000, guid: dcf7b598277a4c041a3c328b52a40949, type: 3}
+--- !u!114 &-4791038090125988634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4447252048652405576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeb8fa3334d505344a27563c90100445, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dashValue: 2
 --- !u!82 &2934221674849538792
 AudioSource:
   m_ObjectHideFlags: 0
