@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ApplicationManager : MonoBehaviour
+public class ApplicationManager
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static ApplicationManager Instance = new ApplicationManager();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    int _score;
+
+    public int Score => _score;
 }
