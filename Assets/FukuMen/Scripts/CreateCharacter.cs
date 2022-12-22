@@ -34,17 +34,23 @@ public class CreateCharacter : Singleton<CreateCharacter>
                 charaControllers[0] = Instantiate(_almondPrefab,_playerPosition.position,Quaternion.identity);
                 charaControllers[1] = Instantiate(_eggPrefab, _othersPosition[0].position, Quaternion.identity);
                 charaControllers[2] = Instantiate(_coinPrefab, _othersPosition[1].position, Quaternion.identity);
+                charaControllers[1].ControllType = ControllType.CPU;
+                charaControllers[2].ControllType = ControllType.CPU;
 
                 break;
             case CharacterType.Coin:
                 charaControllers[0] = Instantiate(_coinPrefab, _playerPosition.position, Quaternion.identity);
                 charaControllers[1] = Instantiate(_eggPrefab, _othersPosition[0].position, Quaternion.identity);
                 charaControllers[2] = Instantiate(_almondPrefab, _othersPosition[1].position, Quaternion.identity);
+                charaControllers[1].ControllType = ControllType.CPU;
+                charaControllers[2].ControllType = ControllType.CPU;
                 break;
             case CharacterType.Egg:
                 charaControllers[0] = Instantiate(_eggPrefab, _playerPosition.position, Quaternion.identity);
                 charaControllers[1] = Instantiate(_almondPrefab, _othersPosition[0].position, Quaternion.identity);
                 charaControllers[2] = Instantiate(_coinPrefab, _othersPosition[1].position, Quaternion.identity);
+                charaControllers[1].ControllType = ControllType.CPU;
+                charaControllers[2].ControllType = ControllType.CPU;
                 break;
         }
 
