@@ -23,7 +23,7 @@ public class DashSkill : MonoBehaviour, ISkill
         
         _charaController.SetPosition(_dashValue);
         isSkill = true;
-        await UniTask.Delay(TimeSpan.FromSeconds(3f));
+        await UniTask.Delay(TimeSpan.FromSeconds(8f));
         isSkill = false;
     }
 }

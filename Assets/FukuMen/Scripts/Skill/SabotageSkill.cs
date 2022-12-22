@@ -27,7 +27,7 @@ public class SabotageSkill :MonoBehaviour, ISkill
             }
         }
         isSkill = true;
-        await UniTask.Delay(TimeSpan.FromSeconds(5f));
+        await UniTask.Delay(TimeSpan.FromSeconds(10f));
         isSkill = false;
     }
 }
