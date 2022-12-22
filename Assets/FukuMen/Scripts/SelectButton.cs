@@ -11,12 +11,13 @@ public class SelectButton : MonoBehaviour
     CharacterType _characterType;
     Button _button;
 
-    public void Init()
+    public void Start()
     {
         _button= GetComponent<Button>();
         _button.onClick.AddListener(() =>
         {
             CreateCharacter.Instance.SelectCharacter(_characterType);
+            CreateCharacter.Instance.Create();
         });
     }
 
