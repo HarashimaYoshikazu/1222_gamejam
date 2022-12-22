@@ -10,19 +10,14 @@ public class SelectButton : MonoBehaviour
     [SerializeField]
     CharacterType _characterType;
     Button _button;
-    public Action OnClick;
 
     public void Init()
     {
         _button= GetComponent<Button>();
         _button.onClick.AddListener(() =>
         {
-            OnClick.Invoke();
+            CreateCharacter.Instance.SelectCharacter(_characterType);
         });
-    }
-    private void OnDestroy()
-    {
-        OnClick = null;
     }
 
 }
