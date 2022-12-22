@@ -325,10 +325,11 @@ MonoBehaviour:
   _limitTime: 60
   _firstActionTime: 42
   _secondActionTime: 50
-  _baseScore: 100
+  _baseScore: 50
   _waitTime: 1
   _timeText: {fileID: 1417736716}
   _scoreText: {fileID: 1723433846}
+  _startTime: 40
 --- !u!4 &819648785
 Transform:
   m_ObjectHideFlags: 0

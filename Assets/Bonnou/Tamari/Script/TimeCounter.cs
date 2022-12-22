@@ -37,7 +37,7 @@ namespace Bonnou
                 _isEnded = true;
                 if (_isEnded)
                 {
-                    _timeText.text = "00" + ":" + "00" + ":" + (_startTime % 60).ToString("F3");
+                    _timeText.text = "00" + ":" + "00" + ":" + "0" + (_startTime % 60).ToString("F3");
                 }
             }
             if (!_isStop)
