@@ -22,6 +22,9 @@ public class CharaController : MonoBehaviour
     [SerializeField]
     private bool _isDamage = false;
 
+    [SerializeField]
+    private Transform[] _speedPosition = new Transform[11];
+
     IJump _iJump;
 
     Rigidbody _rb;
@@ -30,11 +33,11 @@ public class CharaController : MonoBehaviour
     {
         if (_charaType == CharaType.PLAYER)
         {
-            _iJump = GetComponent<PlayerInput>();
+            _iJump = new PlayerInput();
         }
         else if (_charaType == CharaType.CPU)
         {
-            _iJump= GetComponent<EnemyInput>();
+            _iJump= new EnemyInput();
         }
 
         _rb = GetComponent<Rigidbody>();
@@ -51,11 +54,11 @@ public class CharaController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Grounded"))
+        if(other.gameObject.CompareTag("Ground"))
         {
             StartCoroutine(JumpInterval());
         }
-        if (other.gameObject.CompareTag("asteroid"))
+        if (other.gameObject.CompareTag("Obstacle"))
         {
             _speedPower--;
         }
