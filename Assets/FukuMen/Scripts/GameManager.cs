@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Text _timerText = null;
     [SerializeField]
+    private Text _finishText = null;
+    [SerializeField]
     private UnityEvent _finishEvent;
 
     public event Action OnGameFinish;
@@ -48,14 +50,15 @@ public class GameManager : MonoBehaviour
         _timerText.text = _timer.ToString("00");
         if (0 >= _timer)
         {
-            GameFinish();
+            GameFinish("player");
             _start = false;
         }
     }
 
-    public void GameFinish()
+    private void GameFinish(string playerName)
     {
-        if(OnGameFinish != null)
+        _finishText.text = playerName + " èüóòÅI";
+        if (OnGameFinish != null)
         {
             OnGameFinish();
         }
