@@ -5,9 +5,14 @@ using UnityEngine;
 public class DashSkill : MonoBehaviour, ISkill
 {
     [SerializeField]
-    private CharaController _charaController;
-    [SerializeField]
     private int _dashValue = 2;
+
+    private CharaController _charaController;
+
+    private void Start()
+    {
+        _charaController = GetComponent<CharaController>();
+    }
 
     public void UseSkill()
     {
