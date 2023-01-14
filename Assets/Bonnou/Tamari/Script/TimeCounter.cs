@@ -41,22 +41,35 @@ namespace Bonnou
 
         [SerializeField] float _diff = 3;
 
+        [SerializeField] AudioPlayer _player;
+
         string _timeStr;
 
         bool _isStop = false;
         bool _isFirst = false;
         bool _isEnded = false;
 
+        bool _isStart;
+
         void Update()
         {
+            if (!_isStart)
+            {
+                if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1"))
+                {
+                    _isStart = true;
+                }
+
+                return;
+            }
+
             ScoreCalculation();
             if (_startTime >= LimitTime)
             {
-                _isEnded = true;
                 if (_isEnded)
                 {
                     _timeText.text = "00" + ":" + "00" + ":" + "0" + (_startTime % 60).ToString("F3");
-                    _timeStr = _timerText.text;
+                    _timeStr = _timeText.text;
                 }
             }
             if (!_isStop && !_isEnded)
@@ -113,10 +126,11 @@ namespace Bonnou
                    .Append(_timerText.DOFade(1f, _textDuration)).SetEase(_textEase)
                    .Append(_scoreText.DOFade(1f, _textDuration)).SetEase(_textEase)
                    .Append(_scoreText.DOCounter(0, (int)_score, _textDuration)).SetEase(_textEase)
-                   .Append(_resultIcon.transform.DOScale(Vector3.one, _resultDuration)).SetEase(Ease.OutBounce);
+                   .Append(_resultIcon.transform.DOScale(Vector3.one, _resultDuration)).SetEase(Ease.OutBounce).OnComplete(()=> _player.PlaySound(1));
+                
             }
 
-            if (_startTime >= LimitTime + 1f)
+            if (_startTime >= LimitTime + 10f)
             {
                 _isStop = true;
                 _isEnded = true;
@@ -131,7 +145,7 @@ namespace Bonnou
                    .Append(_timerText.DOFade(1f, _textDuration)).SetEase(_textEase)
                    .Append(_scoreText.DOFade(1f, _textDuration)).SetEase(_textEase)
                    .Append(_scoreText.DOCounter(0, (int)_score, _textDuration)).SetEase(_textEase)
-                   .Append(_resultIcon.transform.DOScale(Vector3.one, _resultDuration)).SetEase(Ease.OutBounce);
+                   .Append(_resultIcon.transform.DOScale(Vector3.one, _resultDuration)).SetEase(Ease.OutBounce).OnComplete(() => _player.PlaySound(1));
             }
         }
 
@@ -145,7 +159,7 @@ namespace Bonnou
             {
                 icon = _icons[0];
             }
-            else if(_score >= max * (1/2))
+            else if(_score >= max * (3/2))
             {
                 icon = _icons[1];
             }
